@@ -3,8 +3,8 @@ from sklearn.linear_model import LinearRegression
 from random import randint
 import math
 
-def fonction_db(h,l,L,v,nb_f,coeff_abs,nb_eleves,classe):
-    return round((((math.sqrt(nb_eleves)-2)-(nb_f/4))*(25+classe)*(1-coeff_abs)*(v+2000))/2500*10)/10
+def fonction_db(h,l,L,v,nb_f,coeff_abs_sol,coeff_abs_mur,nb_eleves,classe):
+    return round((((math.sqrt(nb_eleves)-2)-(nb_f/4))*(25+classe)*(1-(coeff_abs_sol+coeff_abs_mur)/2)*(v+2000))/2500*10)/10
     
 def new_mesures(nb):
     mesures = list()
@@ -14,17 +14,18 @@ def new_mesures(nb):
         L = randint(40, 100)/10
         v = h*l*L
         nb_f = randint(2, 4)
-        coeff_abs = randint(1, 30)/100
+        coeff_abs_sol = randint(1, 30)/100
+        coeff_abs_mur = randint(1, 30)/100
         nb_eleves = randint(23, 30)
         classe = randint(1, 6)
-        db = fonction_db(h,l,L,v,nb_f,coeff_abs,nb_eleves,classe)*(randint(9,11)/10)
+        db = fonction_db(h,l,L,v,nb_f,coeff_abs_sol,coeff_abs_mur,nb_eleves,classe)*(randint(9,11)/10)
         
-        mesures.append([db,h,l,L,v,nb_f,coeff_abs,nb_eleves,classe])
+        mesures.append([db,h,l,L,v,nb_f,coeff_abs_sol,coeff_abs_mur,nb_eleves,classe])
     return mesures
 
 
-type_des_parametres = ["son", "hauteur", "longueur", "Largeur", "Volume", "nombre de fenetres", "coefficient de absorption", "nombre d'eleves", "classe"]
-type_des_parametres_short = ["h", "l", "L", "v", "nb_f", "coeff_abs", "nb_eleve", "classe"]
+type_des_parametres = ["son", "hauteur", "longueur", "Largeur", "Volume", "nombre de fenetres", "coefficient de absorption sol", "coefficient d'absorption mur", "nombre d'eleves", "classe"]
+type_des_parametres_short = ["h", "l", "L", "v", "nb_f", "coeff_abs_sol", "coeff_abs_mur", "nb_eleve", "classe"]
 mesures = [[10, 2, 5, 4, 5, 6], [20, 3, 3, 6, 7, 8], [15, 1, 4, 6, 8, 9], [18, 2, 4, 7, 8, 10]]
 mesures = new_mesures(30)
 
