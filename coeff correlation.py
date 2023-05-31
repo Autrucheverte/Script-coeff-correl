@@ -20,16 +20,18 @@ def new_mesures(nb):
         classe = randint(1, 6)
         db = fonction_db(h,l,L,v,nb_f,coeff_abs_sol,coeff_abs_mur,nb_eleves,classe)*(randint(9,11)/10)
         
-        mesures.append([db,h,l,L,v,nb_f,coeff_abs_sol,coeff_abs_mur,nb_eleves,classe])
+        mesures.append([db,h,l,L,v,coeff_abs_sol,nb_eleves,classe])
     return mesures
 
 
-type_des_parametres = ["son", "hauteur", "longueur", "Largeur", "Volume", "nombre de fenetres", "coefficient de absorption sol", "coefficient d'absorption mur", "nombre d'eleves", "classe"]
-type_des_parametres_short = ["h", "l", "L", "v", "nb_f", "coeff_abs_sol", "coeff_abs_mur", "nb_eleve", "classe"]
-mesures = [[10, 2, 5, 4, 5, 6], [20, 3, 3, 6, 7, 8], [15, 1, 4, 6, 8, 9], [18, 2, 4, 7, 8, 10]]
-mesures = new_mesures(30)
+type_des_parametres = ["son", "hauteur", "longueur", "Largeur", "Volume", "coefficient de absorption sol", "nombre d'eleves", "classe"]
+type_des_parametres_short = ["h", "l", "L", "v", "coeff_abs_sol", "nb_eleve", "classe"]
+mesures = [[[68,58], 2.6,13.5,8,280.8, 0.20, 25, 3], [[60,43], 2.6,7.5,5.5,107.25, 0.02, 22, 6], [[66,51], 2.6,9,5.5,128.7, 0.20, 25, 2], [[69,54], 3,14,5.7,(3*14*5.7), 0.02, 22, 3], [[41.4,66], 3.3,11.2,8.6,(3.3*11.2*8.6), 0.20, 22, 6], [[60,72], 3.5,9.8,6,(3.5*9.8*6), 0.20, 27, 2], [[40,59], h,l,L,(h*l*L), 0.20, 21, 6], [[49,64], h,l,L,(h*l*L), 0.20, 25, 2]]
 
-resultats = [m[0] for m in mesures]
+
+# mesures = new_mesures(3)
+
+resultats = [m[0][0] for m in mesures]
 parametres = [m[1:] for m in mesures]
 
 coefficients_correlation = []
@@ -74,11 +76,16 @@ def modelisation_db(coefficients,constante,mesure):
 incertitudes = list()
 incertidude_moyenne = 0
 # mesures = new_mesures(10000)
-for mesure in mesures:
-    incertitude = round(abs(mesure[0]-modelisation_db(coefficients, constante, mesure))/mesure[0]*100)/100
-    incertitudes.append(incertitude)
-    incertidude_moyenne += incertitude
-    
-incertidude_moyenne = round(incertidude_moyenne/len(mesures)*100)/100
 
-print("\nIncertitude max: "+str(round(max(incertitudes)*1000)/10)+"%\nIncertitude moyenne: "+str(round(incertidude_moyenne*1000)/10)+"%")
+
+
+
+
+# for mesure in mesures:
+#     incertitude = round(abs(mesure[0]-modelisation_db(coefficients, constante, mesure))/mesure[0]*100)/100
+#     incertitudes.append(incertitude)
+#     incertidude_moyenne += incertitude
+    
+# incertidude_moyenne = round(incertidude_moyenne/len(mesures)*100)/100
+
+# print("\nIncertitude max: "+str(round(max(incertitudes)*1000)/10)+"%\nIncertitude moyenne: "+str(round(incertidude_moyenne*1000)/10)+"%")
